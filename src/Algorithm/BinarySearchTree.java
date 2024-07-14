@@ -70,10 +70,45 @@ public class BinarySearchTree {
         if (currentIdx != -1) {
             System.out.println("tree[" + currentIdx + "] : " + "data = " + tree[currentIdx].data + " , " + "left = "
                     + tree[currentIdx].left + " , " + "right = " + tree[currentIdx].right);
-                    
+
             // この部分が再帰呼び出し
             printLogicalBST(tree[currentIdx].left);
             printLogicalBST(tree[currentIdx].right);
+        }
+    }
+
+    // 二分探索木を探索するメソッド
+    public static int searchBST(int x) {
+        int idx; // 見つかった要素の添え字
+        int currentIdx; // 現在たどっているノードの添え字
+
+        idx = -1;
+        currentIdx = rootIdx;
+        while (currentIdx != -1) {
+            if (tree[currentIdx].data == x) {
+                idx = currentIdx;
+                break;
+            } else if (tree[currentIdx].data > x) {
+                currentIdx = tree[currentIdx].left;
+            } else {
+                currentIdx = tree[currentIdx].right;
+            }
+        }
+        return idx;
+    }
+
+    // 再帰呼び出しで二分探索木を実装
+    public static int serchRecBST(int x, int currentIdx) {
+        if (currentIdx == -1) {
+            return -1;
+        } else {
+            if (tree[currentIdx].data == x) {
+                return currentIdx;
+            } else if (tree[currentIdx].data > x) {
+                return serchRecBST(x, tree[currentIdx].left);
+            } else {
+                return serchRecBST(x, tree[currentIdx].right);
+            }
         }
     }
 
@@ -96,5 +131,24 @@ public class BinarySearchTree {
         System.out.println("--------------------------------------");
         System.out.println();
         printLogicalBST(rootIdx);
+
+        // 二分探索木を探索する
+        System.out.println();
+        System.out.println("--------------------------------------");
+        System.out.println();
+        System.out.println("探索の開始");
+        System.out.println("5の探索結果 : " + searchBST(5));
+        System.out.println("8の探索結果 : " + searchBST(8));
+
+        //再帰呼び出しで二分探索木を実装
+        System.out.println();
+        System.out.println("--------------------------------------");
+        System.out.println();
+        System.out.println("探索の開始");
+
+        System.out.print("5の探索結果 : ");
+        System.out.println(serchRecBST(5, rootIdx));
+        System.out.print("8の探索結果 : ");
+        System.out.println(serchRecBST(8, rootIdx));
     }
 }
